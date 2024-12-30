@@ -1,0 +1,42 @@
+---
+- name: Manage RHEL Server
+  # hosts: all
+  hosts: ams-amd2.rednull.eu
+  become: true
+  tasks:
+    # - name: Update RHEL to the latest version
+    #   ansible.builtin.dnf:
+    #     name: "*"
+    #     state: latest
+
+    - name: Install EPEL repository
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
+
+    - name: Install required packages
+      ansible.builtin.dnf:
+        name:
+          - vim
+          - git
+          - tmux
+          - podman
+        state: present
+
+    - name: Install tailscale
+      ansible.builtin.command:
+        cmd: curl -fsSL https://tailscale.com/install.sh | sh
+
+    - name: Configure the firewall
+      ansible.posix.firewalld:
+        interface: tailscale0
+        zone: trusted
+        permanent: true
+        state: enabled
+      notify: Restart_firewalld
+
+  handlers:
+    - name: Restart_firewalld
+      ansible.builtin.service:
+        name: firewalld
+        state: restarted
