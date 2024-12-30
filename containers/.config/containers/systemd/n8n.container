@@ -1,0 +1,25 @@
+[Unit]
+Description=Automate with workflows
+Wants=network-online.target
+After=network-online.target
+After=local-fs.target
+
+[Container]
+ContainerName=n8n
+
+Image=docker.n8n.io/n8nio/n8n
+
+Environment=N8N_SECURE_COOKIE=false #disabled for access localhost, not recommended
+Environment=TZ=Asia/Seoul
+Environment=N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+
+Volume=n8n_data:/home/node/.n8n
+
+PublishPort=5678:5678
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=90
+
+[Install]
+WantedBy=default.target
