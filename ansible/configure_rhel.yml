@@ -21,6 +21,7 @@
           - git
           - tmux
           - podman
+          - podman-compose
           - nginx
         state: present
 
