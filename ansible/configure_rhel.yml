@@ -23,6 +23,8 @@
           - podman
           - podman-compose
           - nginx
+          - python3-certbot-dns-cloudflare 
+          - python3-certbot-nginx
         state: present
 
     - name: Install tailscale
