@@ -36,6 +36,7 @@
         permanent: true
         state: enabled
       notify: Restart_firewalld
+    # - name: Open port 80 and 443 permanently
 
   handlers:
     - name: Restart_firewalld
