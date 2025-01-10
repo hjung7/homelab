@@ -21,6 +21,7 @@
           - git
           - tmux
           - podman
+          - nginx
         state: present
 
     - name: Install tailscale
