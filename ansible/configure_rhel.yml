@@ -23,7 +23,7 @@
           - podman
           - podman-compose
           - nginx
-          - python3-certbot-dns-cloudflare 
+          - python3-certbot-dns-cloudflare
           - python3-certbot-nginx
         state: present
 
@@ -38,7 +38,14 @@
         permanent: true
         state: enabled
       notify: Restart_firewalld
-    # - name: Open port 80 and 443 permanently
+    - name: Open port 80 and 443 permanently
+      ansible.posix.firewalld:
+        service: "{{ item }}"
+        permanent: true
+        state: enabled
+      loop:
+        - http
+        - https
 
   handlers:
     - name: Restart_firewalld
