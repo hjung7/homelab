@@ -1,0 +1,23 @@
+[Unit]
+Description=Windmill worker
+Wants=network-online.target
+After=network-online.target
+After=local-fs.target
+
+[Container]
+Image=ghcr.io/windmill-labs/windmill:main
+AutoUpdate=registry
+
+Environment=MODE=worker
+Environment=WORKER_GROUP=default
+EnvironmentFile=.env
+
+Volume=worker_logs:/tmp/windmill/logs:z
+
+[Service]
+Restart=unless-stopped
+TimeoutStartSec=90
+
+[Install]
+WantedBy=default.target
+

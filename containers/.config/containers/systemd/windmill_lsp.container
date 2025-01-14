@@ -1,0 +1,21 @@
+[Unit]
+Description=Windmill lsp
+Wants=network-online.target
+After=network-online.target
+After=local-fs.target
+
+[Container]
+Image=ghcr.io/windmill-labs/windmill-lsp:latest
+AutoUpdate=registry
+
+Volume=lsp_cache:/pyls/.cache
+
+PublishPort=3001:3001
+
+[Service]
+Restart=unless-stopped
+TimeoutStartSec=90
+
+[Install]
+WantedBy=default.target
+

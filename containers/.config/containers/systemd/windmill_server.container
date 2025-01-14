@@ -1,0 +1,26 @@
+[Unit]
+Description=Windmill server
+Wants=network-online.target
+After=network-online.target
+After=local-fs.target
+
+[Container]
+Image=ghcr.io/windmill-labs/windmill:main
+AutoUpdate=registry
+
+#Environment=DATABASE_URL=${DATABASE_URL}
+Environment=MODE=server
+EnvironmentFile=.env
+
+Volume=worker_logs:/tmp/windmill/logs:z
+
+PublishPort=8000:8000
+PublishPort=2525:2525
+
+[Service]
+Restart=unless-stopped
+TimeoutStartSec=90
+
+[Install]
+WantedBy=default.target
+
